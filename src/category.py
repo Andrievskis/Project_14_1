@@ -19,8 +19,14 @@ class Category:
 
     def add_product(self, product: Product) -> None:
         """Добавление товаров в категорию."""
-        self.__products.append(product)
-        Category.product_count += 1
+        if not isinstance(product, Product):
+            raise TypeError("Продукт должен быть экземпляром класса Product.")
+
+        if product not in self.__products:
+            self.__products.append(product)
+            Category.product_count += 1
+        else:
+            print("Продукт уже существует в категории.")
 
     @property
     def products(self) -> str:
