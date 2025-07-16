@@ -6,16 +6,35 @@ class Category:
 
     name: str
     description: str
-    products: list[Product]
+    __products: list[Product]
     product_count = 0
     category_count = 0
 
     def __init__(self, name: str, description: str, products: list[Product]) -> None:
         self.name = name
         self.description = description
-        self.products = products
-        Category.product_count += 1
-        Category.category_count += len(products) if products else 0
+        self.__products = products
+        Category.category_count += 1
+        Category.product_count += len(products) if products else 0
+
+    def add_product(self, product: Product) -> None:
+        """Добавление товаров в категорию."""
+        if not isinstance(product, Product):
+            raise TypeError("Продукт должен быть экземпляром класса Product.")
+
+        if product not in self.__products:
+            self.__products.append(product)
+            Category.product_count += 1
+        else:
+            print("Продукт уже существует в категории.")
+
+    @property
+    def products(self) -> str:
+        """Вывод списка товаров в виде строк."""
+        products_str = ""
+        for product in self.__products:
+            products_str += f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт.\n"
+        return products_str
 
 #
 # if __name__ == "__main__":
@@ -29,23 +48,10 @@ class Category:
 #         [product1, product2, product3],
 #     )
 #
-#     print(category1.name == "Смартфоны")
-#     print(category1.description)
-#     print(len(category1.products))
-#     print(category1.category_count)
+#     print(category1.products)
 #     print(category1.product_count)
 #
 #     product4 = Product('55" QLED 4K', "Фоновая подсветка", 123000.0, 7)
-#     category2 = Category(
-#         "Телевизоры",
-#         "Современный телевизор, который позволяет наслаждаться просмотром, станет вашим другом и помощником",
-#         [product4],
-#     )
-#
-#     print(category2.name)
-#     print(category2.description)
-#     print(len(category2.products))
-#     print(category2.products)
-#
-#     print(Category.category_count)
-#     print(Category.product_count)
+#     category1.add_product(product4)
+#     print(category1.products)
+#     print(category1.product_count)
