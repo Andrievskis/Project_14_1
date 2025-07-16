@@ -8,7 +8,7 @@ from src.product import Product
 
 @pytest.fixture
 def products_info() -> Any:
-    return Product(name="Xiaomi Redmi Note 11", description="1024GB, Синий", price=31000.0, quantity=14)
+    return Product(name="iPhone", description="200GB, Синий", price=31000.0, quantity=14)
 
 
 @pytest.fixture
