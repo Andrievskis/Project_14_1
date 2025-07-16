@@ -38,3 +38,16 @@ def test_add_product(first_category_info: Category, products_info: Product) -> N
         "Xiaomi Note, 25000.0 руб. Остаток: 4 шт.\n"
         "iPhone, 31000.0 руб. Остаток: 14 шт.\n"
     )
+
+
+def test_str(first_category_info: Category) -> None:
+    """Тест на строковое представление категории."""
+    assert str(first_category_info) == "Смартфоны, количество продуктов: 23 шт.\n"
+
+
+def test_sum() -> None:
+    """Тест на общее суммарное значение."""
+    product1 = Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5)
+    product2 = Product("Iphone 15", "512GB, Gray space", 210000.0, 8)
+    result = product1.total_value + product2.total_value
+    assert result == 2580000.0

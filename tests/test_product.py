@@ -1,6 +1,8 @@
 from typing import Any
 from unittest.mock import patch
 
+import pytest
+
 from src.product import Product
 
 
@@ -58,3 +60,21 @@ def test_decrease_price_without_confirm(mock_input: Any) -> None:
     product = Product("iPhone 15", "512GB, Gray space", 120000.0, 8)
     product.price = 100000
     assert product.price == 120000
+
+
+def test_str(products_info: Product) -> None:
+    """Тест на получение строкового значения."""
+    assert str(products_info) == "iPhone, 31000.0 руб. Остаток: 14 шт."
+
+
+def test_sum(products_info: Product) -> None:
+    """Тест на общее суммарное значение."""
+    product1 = Product("Iphone 15", "512GB, Gray space", 210000.0, 8)
+    result = products_info.total_value + product1.total_value
+    assert result == 2114000.0
+
+
+def test_sum_error(products_info: Product) -> None:
+    """Тест на ошибку."""
+    with pytest.raises(ValueError):
+        products_info + 123
