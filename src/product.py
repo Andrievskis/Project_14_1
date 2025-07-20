@@ -15,6 +15,22 @@ class Product:
         self.__price = price
         self.quantity = quantity
 
+    def __str__(self) -> str:
+        """Строковое отображение продукта."""
+        return f"{self.name}, {self.__price} руб. Остаток: {self.quantity} шт."
+
+    @property
+    def total_value(self) -> float:
+        """Общая стоимость продукта (цена * количество)."""
+        return self.__price * self.quantity
+
+    def __add__(self, other: float) -> float | str:
+        """Суммарное представление стоимости товаров."""
+        if isinstance(other, Product):
+            return self.total_value + other.total_value
+        else:
+            raise ValueError("Other не является объектом класса Product.")
+
     @property
     def price(self) -> float:
         """Геттер цены."""
@@ -22,7 +38,7 @@ class Product:
 
     @price.setter
     def price(self, new_price: float) -> None:
-        """Для обработки цены"""
+        """Обработка цены."""
         if new_price <= 0:
             print("Цена не должна быть нулевая или отрицательная.")
         elif new_price < self.__price:
@@ -46,24 +62,15 @@ class Product:
         return cls(name, description, price, quantity)
 
 
-# if __name__ == "__main__":
-#     product_data: Any = {
-#         "name": "Samsung Galaxy S23 Ultra",
-#         "description": "256GB, Серый цвет, 200MP камера",
-#         "price": 180000.0,
-#         "quantity": 5,
-#     }
-#     new_product = Product(**product_data)
+# if __name__ == '__main__':
+#     product1 = Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5)
+#     product2 = Product("Iphone 15", "512GB, Gray space", 210000.0, 8)
+#     product3 = Product("Xiaomi Redmi Note 11", "1024GB, Синий", 31000.0, 14)
 #
-#     print(new_product.name)
-#     print(new_product.description)
-#     print(new_product.price)
-#     print(new_product.quantity)
+#     print(str(product1))
+#     print(str(product2))
+#     print(str(product3))
 #
-#     new_product.price = 800
-#     print(new_product.price)
-#
-#     new_product.price = -100
-#     print(new_product.price)
-#     new_product.price = 0
-#     print(new_product.price)
+#     print(product1 + product2)
+#     print(product1 + product3)
+#     print(product2 + product3)
