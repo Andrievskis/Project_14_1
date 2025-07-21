@@ -3,7 +3,7 @@ from unittest.mock import patch
 
 import pytest
 
-from src.product import Product
+from src.product import LawnGrass, Product, Smartphone
 
 
 def test_product(products_info: Any) -> None:
@@ -78,3 +78,57 @@ def test_sum_error(products_info: Product) -> None:
     """Тест на ошибку."""
     with pytest.raises(ValueError):
         products_info + 123
+
+
+def test_add_same_type() -> None:
+    """Тест на корректное сложение одного типа."""
+    phone1 = Smartphone(
+        name="iPhone 14",
+        description="Смартфон Apple",
+        price=70000.0,
+        quantity=5,
+        efficiency=98.2,
+        model="iPhone 14",
+        memory=256,
+        color="Черный",
+    )
+
+    phone2 = Smartphone(
+        name="iPhone 14 Pro",
+        description="Смартфон Apple Pro",
+        price=90000.0,
+        quantity=5,
+        efficiency=98.2,
+        model="iPhone 14 Pro",
+        memory=256,
+        color="Черный",
+    )
+
+    assert phone1.total_value + phone2.total_value
+
+
+def test_smartphone() -> None:
+    """Тест на корректность работы класса Smartphone."""
+    smartphone = Smartphone(
+        "Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5, 95.5, "S23 Ultra", 256, "Серый"
+    )
+    assert smartphone.name == "Samsung Galaxy S23 Ultra"
+    assert smartphone.description == "256GB, Серый цвет, 200MP камера"
+    assert smartphone.price == 180000.0
+    assert smartphone.quantity == 5
+    assert smartphone.efficiency == 95.5
+    assert smartphone.model == "S23 Ultra"
+    assert smartphone.memory == 256
+    assert smartphone.color == "Серый"
+
+
+def test_lawn_grass() -> None:
+    """Тест на корректность работы класса LawnGrass."""
+    grass1 = LawnGrass("Газонная трава", "Элитная трава для газона", 500.0, 20, "Россия", "7 дней", "Зеленый")
+    assert grass1.name == "Газонная трава"
+    assert grass1.description == "Элитная трава для газона"
+    assert grass1.price == 500.0
+    assert grass1.quantity == 20
+    assert grass1.country == "Россия"
+    assert grass1.germination_period == "7 дней"
+    assert grass1.color == "Зеленый"
