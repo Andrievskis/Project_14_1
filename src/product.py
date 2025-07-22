@@ -26,10 +26,12 @@ class Product:
 
     def __add__(self, other: float) -> float | str:
         """Суммарное представление стоимости товаров."""
-        if isinstance(other, Product):
-            return self.total_value + other.total_value
-        else:
+        if not isinstance(other, Product):
             raise ValueError("Other не является объектом класса Product.")
+        elif type(self) is not type(other):
+            raise TypeError("Нельзя складывать товары из разных классов продуктов.")
+        else:
+            return self.total_value + other.total_value
 
     @property
     def price(self) -> float:
@@ -62,15 +64,41 @@ class Product:
         return cls(name, description, price, quantity)
 
 
-# if __name__ == '__main__':
-#     product1 = Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5)
-#     product2 = Product("Iphone 15", "512GB, Gray space", 210000.0, 8)
-#     product3 = Product("Xiaomi Redmi Note 11", "1024GB, Синий", 31000.0, 14)
-#
-#     print(str(product1))
-#     print(str(product2))
-#     print(str(product3))
-#
-#     print(product1 + product2)
-#     print(product1 + product3)
-#     print(product2 + product3)
+class Smartphone(Product):
+    """Класс описания смартфонов."""
+
+    def __init__(
+        self,
+        name: str,
+        description: str,
+        price: float,
+        quantity: int,
+        efficiency: float,
+        model: str,
+        memory: int,
+        color: str,
+    ):
+        super().__init__(name, description, price, quantity)
+        self.efficiency = efficiency
+        self.model = model
+        self.memory = memory
+        self.color = color
+
+
+class LawnGrass(Product):
+    """Класс описания газонно травы."""
+
+    def __init__(
+        self,
+        name: str,
+        description: str,
+        price: float,
+        quantity: int,
+        country: str,
+        germination_period: str,
+        color: str,
+    ):
+        super().__init__(name, description, price, quantity)
+        self.country = country
+        self.germination_period = germination_period
+        self.color = color
