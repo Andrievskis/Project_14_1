@@ -1,7 +1,10 @@
 from typing import Any
 
+from src.base_product import BaseProduct
+from src.print_mixin import PrintMixin
 
-class Product:
+
+class Product(PrintMixin, BaseProduct):
     """Класс описания продукта."""
 
     name: str
@@ -14,6 +17,8 @@ class Product:
         self.description = description
         self.__price = price
         self.quantity = quantity
+        # PrintMixin.__init__(self)
+        super().__init__()
 
     def __str__(self) -> str:
         """Строковое отображение продукта."""
@@ -68,15 +73,15 @@ class Smartphone(Product):
     """Класс описания смартфонов."""
 
     def __init__(
-        self,
-        name: str,
-        description: str,
-        price: float,
-        quantity: int,
-        efficiency: float,
-        model: str,
-        memory: int,
-        color: str,
+            self,
+            name: str,
+            description: str,
+            price: float,
+            quantity: int,
+            efficiency: float,
+            model: str,
+            memory: int,
+            color: str,
     ):
         super().__init__(name, description, price, quantity)
         self.efficiency = efficiency
@@ -89,14 +94,14 @@ class LawnGrass(Product):
     """Класс описания газонно травы."""
 
     def __init__(
-        self,
-        name: str,
-        description: str,
-        price: float,
-        quantity: int,
-        country: str,
-        germination_period: str,
-        color: str,
+            self,
+            name: str,
+            description: str,
+            price: float,
+            quantity: int,
+            country: str,
+            germination_period: str,
+            color: str,
     ):
         super().__init__(name, description, price, quantity)
         self.country = country

@@ -20,7 +20,7 @@ def test_category_iter(first_category_info: Category) -> None:
 
 def test_category_iter_(first_category_info: Category) -> None:
     """Тест на корректную работу вспомогательного класса
-    и обработка ошибки в случаю отсутствия следующей итерации."""
+    и обработка ошибки в случае отсутствия следующей итерации."""
     iterator = CategoryIterator(first_category_info)
 
     assert next(iterator).name == "Xiaomi Redmi Note 11"
