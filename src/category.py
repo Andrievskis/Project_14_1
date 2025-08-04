@@ -1,7 +1,9 @@
+from src.base_order import BaseOrder
+from src.exception_zero import ZeroQuantityError
 from src.product import Product
 
 
-class Category:
+class Category(BaseOrder):
     """Класс описания категории, в который входит информация о продукте класса Product."""
 
     name: str
@@ -26,13 +28,24 @@ class Category:
 
     def add_product(self, product: Product) -> None:
         """Добавление товаров в категорию."""
-        if not isinstance(product, Product):
-            raise TypeError("Продукт должен быть экземпляром класса Product.")
-        if product not in self.__products:
-            self.__products.append(product)
-            Category.product_count += 1
-        else:
-            print("Продукт уже существует в категории.")
+        try:
+            if not isinstance(product, Product):
+                raise TypeError("Продукт должен быть экземпляром класса Product.")
+
+            if product.quantity <= 0:
+                raise ZeroQuantityError(f"Товар {product.name} имеет нулевое количество")
+
+            if product in self.__products:
+                print("Продукт уже существует в категории.")
+
+            else:
+                self.__products.append(product)
+                Category.product_count += 1
+                print(f"Товар {product.name} успешно добавлен в категорию.")
+        except ZeroQuantityError as e:
+            print(e)
+        finally:
+            print("Обработка добавления товара завершена.")
 
     @property
     def products(self) -> str:
@@ -46,3 +59,10 @@ class Category:
     def list_products(self) -> list:
         """Получение списка продуктов."""
         return self.__products
+
+    def middle_price(self) -> float:
+        """Метод, который подсчитывает средний ценник всех товаров."""
+        try:
+            return round(sum([product.price for product in self.__products]) / len(self.__products), 2)
+        except ZeroDivisionError:
+            return 0

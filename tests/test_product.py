@@ -132,3 +132,26 @@ def test_lawn_grass() -> None:
     assert grass1.country == "Россия"
     assert grass1.germination_period == "7 дней"
     assert grass1.color == "Зеленый"
+
+
+def test_zero_quantity() -> None:
+    with pytest.raises(ValueError) as e_product:
+        Product(name="iPhone", description="200GB, Синий", price=31000.0, quantity=0)
+        assert str(e_product) == "Товар с нулевым количеством не может быть добавлен."
+
+    with pytest.raises(ValueError) as e_smartphone:
+        Smartphone(
+            name="iPhone 14 Pro",
+            description="Смартфон Apple Pro",
+            price=90000.0,
+            quantity=0,
+            efficiency=98.2,
+            model="iPhone 14 Pro",
+            memory=256,
+            color="Черный",
+        )
+        assert str(e_smartphone) == "Товар с нулевым количеством не может быть добавлен."
+
+    with pytest.raises(ValueError) as e_grass:
+        LawnGrass("Газонная трава 2", "Густая трава", 700.0, 0, "Россия", "7 дней", "Темно-зеленый")
+        assert str(e_grass) == "Товар с нулевым количеством не может быть добавлен."
